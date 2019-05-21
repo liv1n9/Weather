@@ -3,7 +3,6 @@ package com.example.weather.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +38,11 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public void onBindViewHolder(@NonNull ForecastViewHolder forecastViewHolder, int i) {
         if (i == 0) {
-            forecastViewHolder.itemView.setBackgroundColor(forecastViewHolder.itemView.getResources().getColor(R.color.secondaryColor, null));
+            forecastViewHolder.itemView.setBackgroundColor(
+                    forecastViewHolder.itemView.getResources().getColor(R.color.secondaryColor, null));
         } else if (i == getItemCount() - 1) {
-            forecastViewHolder.itemView.setBackgroundColor(forecastViewHolder.itemView.getResources().getColor(R.color.primaryColor, null));
+            forecastViewHolder.itemView.setBackgroundColor(
+                    forecastViewHolder.itemView.getResources().getColor(R.color.primaryColor, null));
         }
         Data data = forecastData.get(i);
         long timestamp = data.getTime();

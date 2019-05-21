@@ -22,10 +22,8 @@
         </activity>
 
         <activity
-                android:launchMode="singleTop"
                 android:theme="@style/MainActivityTheme"
                 android:name=".activity.MainActivity">
-
         </activity>
     </application>
 

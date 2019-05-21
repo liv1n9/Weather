@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class WeatherDatabase extends SQLiteOpenHelper {
     private Context context;
@@ -71,7 +73,12 @@ public class WeatherDatabase extends SQLiteOpenHelper {
             }
             if (formatFlag) {
                 Log.d(TAG, "Read data successfully!");
+                Set<Integer> idSet = new TreeSet<>();
                 for (City city: data) {
+                    if (idSet.contains(city.getId())) {
+                        continue;
+                    }
+                    idSet.add(city.getId());
                     String insertQuery = String.format(
                             "INSERT INTO %s (%s, %s, %s, %s) VALUES (\"%s\", \"%s\", %s, %s)",
                             TABLE_CITY,

@@ -1,5 +1,6 @@
 package com.example.weather.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +39,7 @@ public class StartActivity extends AppCompatActivity {
     private String curUnit, curLoc;
     private Handler handler = new Handler();
     private String cityQuery;
+    private boolean setting;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -51,14 +53,14 @@ public class StartActivity extends AppCompatActivity {
         weatherDatabase = new WeatherDatabase(this);
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-        boolean setting = false;
+        setting = false;
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
-            setting = extra.getBoolean(MainActivity.SETTING);
-            curLat = extra.getFloat(LAT);
-            curLng = extra.getFloat(LNG);
-            curUnit = extra.getString(UNIT);
-            curLoc = extra.getString(LOC);
+            setting = extra.getBoolean(MainActivity.SETTING, false);
+            curLat = extra.getFloat(LAT, 0.0f);
+            curLng = extra.getFloat(LNG, 0.0f);
+            curUnit = extra.getString(UNIT, "SI");
+            curLoc = extra.getString(LOC, "Earth");
         }
         boolean firstUse = sharedPreferences.getBoolean(FIRST_USE, true);
         if (firstUse || setting) {
@@ -110,6 +112,9 @@ public class StartActivity extends AppCompatActivity {
                 editor.putString(LOC, curLoc);
                 editor.commit();
                 startActivity(intent);
+                if (setting) {
+                    setResult(Activity.RESULT_OK, new Intent());
+                }
                 StartActivity.this.finish();
             }
         });
@@ -126,7 +131,7 @@ public class StartActivity extends AppCompatActivity {
         searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int i) {
-                return false;
+                return true;
             }
 
             @Override
@@ -195,6 +200,7 @@ public class StartActivity extends AppCompatActivity {
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setResult(Activity.RESULT_CANCELED, new Intent());
                     StartActivity.this.finish();
                 }
             });
