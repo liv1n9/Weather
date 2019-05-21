@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:windowBackground">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="MainWeatherTheme">
+        <item name="android:background">@color/primaryLightColor</item>
+    </style>
+
+    <style name="WeatherToolbarTheme" parent="Base.V7.Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/primaryColor</item>
+    </style>
+
+    <style name="MainActivityTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="toolbarStyle">@style/WeatherToolbarTheme</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:windowBackground">@color/primaryDarkColor</item>
+    </style>
+</resources>

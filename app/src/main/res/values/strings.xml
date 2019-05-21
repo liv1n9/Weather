@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="template_location">"No data"</string>
+    <string name="template_temperature">"28"</string>
+    <string name="degree">°</string>
+    <string name="template_description">"Light rain until afternoon, starting again overnight."</string>
+    <string name="template_humidity">"Humidity: 80%"</string>
+    <string name="template_day">MON 15</string>
+    <string name="template_wind">"Wind: 3 m/s"</string>
+    <string name="action_search">Search</string>
+    <string name="action_setting">Setting</string>
+    <string name="query_hint">Enter city\'s name</string>
+    <string name="units">Units:</string>
+    <string name="unit_us">US</string>
+    <string name="unit_si">SI</string>
+    <string name="city_search">City:</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+</resources>
