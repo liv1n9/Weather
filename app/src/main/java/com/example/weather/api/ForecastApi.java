@@ -25,11 +25,18 @@ public class ForecastApi {
     private AppCompatActivity context;
     private static final String degree = "°";
 
-    public ForecastApi(Context context) {
+    private float lat, lng;
+    private String unit, loc;
+
+    public ForecastApi(Context context, float lat, float lng, String unit, String loc) {
         this.context = (AppCompatActivity) context;
+        this.lat = lat;
+        this.lng = lng;
+        this.unit = unit;
+        this.loc = loc;
     }
 
-    public void setWeatherInfoView(float lat, float lng, final String unit, final String loc) {
+    public void setWeatherInfoView() {
         RequestQueue queue = Volley.newRequestQueue(context);
         final String tempUnit, speedUnit;
         if (unit.equals("us")) {

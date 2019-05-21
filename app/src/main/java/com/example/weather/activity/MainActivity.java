@@ -108,14 +108,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWeatherView() {
-        ForecastApi api = new ForecastApi(this);
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             float lat = extra.getFloat(StartActivity.LAT, 0.0f);
             float lng = extra.getFloat(StartActivity.LNG, 0.0f);
             String unit = extra.getString(StartActivity.UNIT, "SI").toLowerCase();
             String loc = extra.getString(StartActivity.LOC, "Earth");
-            api.setWeatherInfoView(lat, lng, unit, loc);
+            ForecastApi api = new ForecastApi(this, lat, lng, unit, loc);
+            api.setWeatherInfoView();
         }
     }
 

@@ -46,12 +46,12 @@
             <RadioButton
                     android:id="@+id/radio_us"
                     android:text="@string/unit_us"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <RadioButton
                     android:id="@+id/radio_si"
                     android:text="@string/unit_si"
-                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </RadioGroup>
