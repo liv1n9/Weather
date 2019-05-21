@@ -8,27 +8,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import com.bumptech.glide.Glide;
 import com.example.weather.R;
 import com.example.weather.api.ForecastApi;
 import com.example.weather.database.WeatherDatabase;
 import com.example.weather.model.City;
-
-import java.net.MalformedURLException;
 
 public class MainActivity extends AppCompatActivity {
 
     private WeatherDatabase weatherDatabase;
     private SearchView searchView;
     private String cityQuery;
+    private float curLat;
+    private float curLng;
+    private String curUnit;
+    private String curLoc;
     private Handler handler = new Handler();
 
     public static String SETTING = "SETTING";
@@ -95,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_setting) {
             Intent intent = new Intent(MainActivity.this, StartActivity.class);
             intent.putExtra(SETTING, true);
+            intent.putExtra(StartActivity.LAT, curLat);
+            intent.putExtra(StartActivity.LNG, curLng);
+            intent.putExtra(StartActivity.UNIT, curUnit);
+            intent.putExtra(StartActivity.LOC, curLoc);
             startActivity(intent);
             return true;
         }
@@ -110,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
     private void initWeatherView() {
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
-            float lat = extra.getFloat(StartActivity.LAT, 0.0f);
-            float lng = extra.getFloat(StartActivity.LNG, 0.0f);
-            String unit = extra.getString(StartActivity.UNIT, "SI").toLowerCase();
-            String loc = extra.getString(StartActivity.LOC, "Earth");
-            ForecastApi api = new ForecastApi(this, lat, lng, unit, loc);
+            curLat = extra.getFloat(StartActivity.LAT, 0.0f);
+            curLng = extra.getFloat(StartActivity.LNG, 0.0f);
+            curUnit = extra.getString(StartActivity.UNIT, "SI");
+            curLoc = extra.getString(StartActivity.LOC, "Earth");
+            ForecastApi api = new ForecastApi(this, curLat, curLng, curUnit.toLowerCase(), curLoc);
             api.setWeatherInfoView();
         }
     }

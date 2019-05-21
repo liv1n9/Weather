@@ -55,20 +55,24 @@ public class StartActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             setting = extra.getBoolean(MainActivity.SETTING);
+            curLat = extra.getFloat(LAT);
+            curLng = extra.getFloat(LNG);
+            curUnit = extra.getString(UNIT);
+            curLoc = extra.getString(LOC);
         }
         boolean firstUse = sharedPreferences.getBoolean(FIRST_USE, true);
         if (firstUse || setting) {
             setContentView(R.layout.activity_start);
             editor = sharedPreferences.edit();
             initSaveButton();
-            initSearchView();
-            initRadioGroup();
+            initSearchView(setting);
+            initRadioGroup(setting);
             initCancel(setting);
             editor.apply();
         } else {
             float lat = sharedPreferences.getFloat(LAT, 0.0f);
             float lng = sharedPreferences.getFloat(LNG, 0.0f);
-            String unit = sharedPreferences.getString(UNIT, "si");
+            String unit = sharedPreferences.getString(UNIT, "SI");
             String loc = sharedPreferences.getString(LOC, "Earth");
 
             Intent intent = new Intent(StartActivity.this, MainActivity.class);
@@ -111,8 +115,14 @@ public class StartActivity extends AppCompatActivity {
         });
     }
 
-    private void initSearchView() {
+    private void initSearchView(boolean setting) {
         searchView = findViewById(R.id.search_view_city);
+
+        if (setting) {
+            String[] temp = curLoc.split(" - ");
+            searchView.setQuery(temp[0], false);
+        }
+
         searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int i) {
@@ -156,8 +166,17 @@ public class StartActivity extends AppCompatActivity {
         });
     }
 
-    private void initRadioGroup() {
+    private void initRadioGroup(boolean setting) {
         RadioGroup radioGroup = findViewById(R.id.radio_units);
+        if (setting) {
+            if (curUnit.equals("US")) {
+                RadioButton usButton = findViewById(R.id.radio_us);
+                usButton.setChecked(true);
+            } else {
+                RadioButton siButton = findViewById(R.id.radio_si);
+                siButton.setChecked(true);
+            }
+        }
         RadioButton checkedButton = findViewById(radioGroup.getCheckedRadioButtonId());
         curUnit = checkedButton.getText().toString();
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
