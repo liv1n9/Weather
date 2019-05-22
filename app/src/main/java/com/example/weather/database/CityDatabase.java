@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class WeatherDatabase extends SQLiteOpenHelper {
+public class CityDatabase extends SQLiteOpenHelper {
     private Context context;
-    private final static String TAG = "WeatherDatabase";
+    private final static String TAG = "CityDatabase";
     private final static String DATA_FILE = "world_city.data";
 
     private final static String DATABASE_NAME = "weather";
@@ -33,7 +33,7 @@ public class WeatherDatabase extends SQLiteOpenHelper {
     public final static String COLUMN_CITY_LAT = "cityLat";
     public final static String COLUMN_CITY_LNG = "cityLng";
 
-    public WeatherDatabase(Context context) {
+    public CityDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }

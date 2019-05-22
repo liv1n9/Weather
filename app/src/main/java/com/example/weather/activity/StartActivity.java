@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import com.example.weather.R;
-import com.example.weather.database.WeatherDatabase;
+import com.example.weather.database.CityDatabase;
 import com.example.weather.model.City;
 
 import java.util.Objects;
@@ -31,7 +31,7 @@ public class StartActivity extends AppCompatActivity {
     static final String LOC = "LOC";
 
     private SharedPreferences.Editor editor;
-    private WeatherDatabase weatherDatabase;
+    private CityDatabase cityDatabase;
     private SearchView searchView;
     private Button saveButton;
 
@@ -44,13 +44,13 @@ public class StartActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            searchView.setSuggestionsAdapter(weatherDatabase.getCitySuggestionAdapter(cityQuery));
+            searchView.setSuggestionsAdapter(cityDatabase.getCitySuggestionAdapter(cityQuery));
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        weatherDatabase = new WeatherDatabase(this);
+        cityDatabase = new CityDatabase(this);
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         setting = false;
@@ -208,9 +208,9 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void applyCursor(Cursor cursor) {
-        String cityName = cursor.getString(cursor.getColumnIndex(WeatherDatabase.COLUMN_CITY_NAME));
-        int cityId = cursor.getInt(cursor.getColumnIndex(WeatherDatabase.COLUMN_CITY_ID));
-        City curCity = weatherDatabase.getCity(cityId);
+        String cityName = cursor.getString(cursor.getColumnIndex(CityDatabase.COLUMN_CITY_NAME));
+        int cityId = cursor.getInt(cursor.getColumnIndex(CityDatabase.COLUMN_CITY_ID));
+        City curCity = cityDatabase.getCity(cityId);
         if (curCity != null) {
             curLat = curCity.getCityLat();
             curLng = curCity.getCityLng();

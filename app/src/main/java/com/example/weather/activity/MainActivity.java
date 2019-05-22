@@ -13,14 +13,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.example.weather.R;
 import com.example.weather.api.ForecastApi;
-import com.example.weather.database.WeatherDatabase;
+import com.example.weather.database.CityDatabase;
 import com.example.weather.model.City;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WeatherDatabase weatherDatabase;
+    private CityDatabase cityDatabase;
     private SearchView searchView;
     private String cityQuery;
     private float curLat;
@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            searchView.setSuggestionsAdapter(weatherDatabase.getCitySuggestionAdapter(cityQuery));
+            searchView.setSuggestionsAdapter(cityDatabase.getCitySuggestionAdapter(cityQuery));
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        weatherDatabase = new WeatherDatabase(this);
+        cityDatabase = new CityDatabase(this);
         super.onCreate(savedInstanceState);
 
         isSearchResult = false;
@@ -159,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void applyCursor(Cursor cursor) {
-        cityQuery = cursor.getString(cursor.getColumnIndex(WeatherDatabase.COLUMN_CITY_NAME));
-        int cityId = cursor.getInt(cursor.getColumnIndex(WeatherDatabase.COLUMN_CITY_ID));
-        City curCity = weatherDatabase.getCity(cityId);
+        cityQuery = cursor.getString(cursor.getColumnIndex(CityDatabase.COLUMN_CITY_NAME));
+        int cityId = cursor.getInt(cursor.getColumnIndex(CityDatabase.COLUMN_CITY_ID));
+        City curCity = cityDatabase.getCity(cityId);
         if (curCity != null) {
             searchView.setQuery(cityQuery, false);
             Intent intent = new Intent(this, MainActivity.class);
